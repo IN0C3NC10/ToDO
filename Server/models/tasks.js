@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     when: DataTypes.DATE,
-    done: DataTypes.BOOLEAN
+    done: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    }
   }, {
     sequelize,
     modelName: 'Tasks',
