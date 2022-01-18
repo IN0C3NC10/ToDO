@@ -14,11 +14,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Tasks.init({
-    macaddress: DataTypes.STRING,
+    macaddress: {
+      type:DataTypes.STRING,
+      allowNull:false
+    },
     category: DataTypes.NUMERIC,
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    when: DataTypes.DATE,
+    title: {
+      type:DataTypes.STRING,
+      allowNull:false
+    },
+    description: {
+      type:DataTypes.TEXT,
+      allowNull:false},
+    when: {
+      type:DataTypes.DATE,
+      allowNull:false
+    },
     done: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

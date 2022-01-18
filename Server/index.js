@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const port = process.env.APP_PORT;
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
