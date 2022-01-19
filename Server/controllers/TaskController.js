@@ -4,7 +4,7 @@ let task = models.Tasks;
 class TaskController {
     //========== CREATE ==========//
     async create(req, res) {
-        // persiste os dados e  se der certo vai ao "then", e errado vai para o "catch"
+        // persiste os dados, se der certo vai ao "then" e errado vai para o "catch"
         await task.create({
             macaddress: req.body.macaddress,
             category: req.body.category,
@@ -38,6 +38,21 @@ class TaskController {
         Task.done = req.body.done ? req.body.done : Task._previousDataValues.done;
         Task.updatedAt = new Date();
         Task.save().then(response => {
+            return res.status(200).json(response);
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
+
+    //========== ALL ==========//
+    async all(req, res) {
+        // recupera todos os dados e dando certo vai ao "then" e errado vai para o "catch"
+        await task.findAll({
+            where: {
+                macaddress: req.body.macaddress 
+            },
+            order: [['when','ASC']]
+        }).then(response => {
             return res.status(200).json(response);
         }).catch(error => {
             return res.status(500).json(error);
