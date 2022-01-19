@@ -58,6 +58,23 @@ class TaskController {
             return res.status(500).json(error);
         });
     }
+
+    //========== SHOW ==========//
+    async show(req, res) {
+        // recupera algum dado especifico e dando certo vai ao "then" e errado vai para o "catch"
+        await task.findOne({
+            where: {
+                id: req.params.id
+            }
+        }).then(response => {
+            if(response)
+                return res.status(200).json(response);
+            else
+                return res.status(404).json({error:'Tarefa não encontrada!'});
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
 }
 
 module.exports = new TaskController();

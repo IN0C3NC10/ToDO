@@ -10,5 +10,6 @@ const TaskController = require('../controllers/TaskController');
 router.post('/', TaskValidation, TaskController.create);
 router.put('/:id', TaskValidation, TaskController.update);
 router.get('/filter/all', MacAddressValidation,TaskController.all);
+router.get('/:id', TaskController.show);
 
 module.exports = router;
