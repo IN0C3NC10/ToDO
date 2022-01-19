@@ -1,7 +1,6 @@
 <template>
   <div>
     <Header/>
-    <h1>Welcome Friend!</h1>
   </div>
   
 </template>
@@ -15,6 +14,13 @@ export default {
 }
 </script>
 <style>
+:root{
+    --light:#fff;
+    --dark:#333;
+    --one:#1B2C86;
+    --two:#F4970B;
+    --three:#707070;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
