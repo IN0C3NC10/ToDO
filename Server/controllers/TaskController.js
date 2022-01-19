@@ -7,7 +7,9 @@ const {
     startOfWeek,
     endOfWeek,
     startOfMonth,
-    endOfMonth
+    endOfMonth,
+    startOfYear,
+    endOfYear
 } = require('date-fns');
 const current = new Date();
 
@@ -173,6 +175,22 @@ class TaskController {
             where: {
                 macaddress: req.body.macaddress,
                 when: { [Op.between]:[startOfMonth(current),endOfMonth(current)] }
+            },
+            order: [['when','ASC']]
+        }).then(response => {
+            return res.status(200).json(response);
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
+
+    //========== YEAR ==========//
+    async year(req, res) {
+        // recupera todas as tarefas do ano e dando certo vai ao "then" e errado vai para o "catch"
+        await task.findAll({
+            where: {
+                macaddress: req.body.macaddress,
+                when: { [Op.between]:[startOfYear(current),endOfYear(current)] }
             },
             order: [['when','ASC']]
         }).then(response => {
