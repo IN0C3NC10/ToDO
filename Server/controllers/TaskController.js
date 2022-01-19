@@ -1,6 +1,7 @@
 const { Op } = require('sequelize/dist');
 const models = require('../models/');
 let task = models.Tasks;
+const {startOfDay,endOfDay} = require('date-fns');
 const current = new Date();
 
 class TaskController {
@@ -117,6 +118,22 @@ class TaskController {
             where: {
                 macaddress: req.body.macaddress,
                 when: { [Op.lt]:current }
+            },
+            order: [['when','ASC']]
+        }).then(response => {
+            return res.status(200).json(response);
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
+
+    //========== TODAY ==========//
+    async today(req, res) {
+        // recupera todos as tarefas atrasadas e dando certo vai ao "then" e errado vai para o "catch"
+        await task.findAll({
+            where: {
+                macaddress: req.body.macaddress,
+                when: { [Op.between]:[startOfDay(current),endOfDay(current)] }
             },
             order: [['when','ASC']]
         }).then(response => {
