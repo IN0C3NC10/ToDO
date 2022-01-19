@@ -1,5 +1,7 @@
+const { Op } = require('sequelize/dist');
 const models = require('../models/');
 let task = models.Tasks;
+const current = new Date();
 
 class TaskController {
     //========== CREATE ==========//
@@ -103,6 +105,22 @@ class TaskController {
             }
         }).then(response => {
             return res.status(200).json({success: 'Item alterado com sucesso!'});
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
+
+    //========== LATE ==========//
+    async late(req, res) {
+        // recupera todos as tarefas atrasadas e dando certo vai ao "then" e errado vai para o "catch"
+        await task.findAll({
+            where: {
+                macaddress: req.body.macaddress,
+                when: { [Op.lt]:current }
+            },
+            order: [['when','ASC']]
+        }).then(response => {
+            return res.status(200).json(response);
         }).catch(error => {
             return res.status(500).json(error);
         });

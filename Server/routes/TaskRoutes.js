@@ -8,10 +8,12 @@ const TaskController = require('../controllers/TaskController');
 
 //=========== ROTAS ===========//
 router.post('/', TaskValidation, TaskController.create);
+router.get('/:id', TaskController.show);
 router.put('/:id', TaskValidation, TaskController.update);
 router.put('/:id/:done', TaskController.done);
-router.get('/filter/all', MacAddressValidation,TaskController.all);
-router.get('/:id', TaskController.show);
 router.delete('/:id', TaskController.delete);
+
+router.get('/filter/all', MacAddressValidation,TaskController.all);
+router.get('/:filter/late', MacAddressValidation,TaskController.late);
 
 module.exports = router;
