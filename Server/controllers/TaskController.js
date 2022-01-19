@@ -89,6 +89,24 @@ class TaskController {
             return res.status(500).json(error);
         });
     }
+
+    //========== UPDATE STATUS ==========//
+    async done(req, res) {
+        // altera o status de algum dado especifico, dando certo vai ao "then" e errado vai para o "catch"
+        await task.update({
+            done: req.params.done,
+            updatedAt: new Date()
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        }).then(response => {
+            return res.status(200).json({success: 'Item alterado com sucesso!'});
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
 }
 
 module.exports = new TaskController();
