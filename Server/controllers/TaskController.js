@@ -75,6 +75,20 @@ class TaskController {
             return res.status(500).json(error);
         });
     }
+
+    //========== DELETE ==========//
+    async delete(req, res) {
+        // deleta algum dado especifico e dando certo vai ao "then" e errado vai para o "catch"
+        await task.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(response => {
+            return res.status(200).json({success:'Tarefa deletada com sucesso!'});
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
 }
 
 module.exports = new TaskController();
