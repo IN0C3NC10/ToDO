@@ -1,7 +1,14 @@
 const { Op } = require('sequelize/dist');
 const models = require('../models/');
 let task = models.Tasks;
-const {startOfDay,endOfDay,startOfWeek,endOfWeek} = require('date-fns');
+const {
+    startOfDay,
+    endOfDay,
+    startOfWeek,
+    endOfWeek,
+    startOfMonth,
+    endOfMonth
+} = require('date-fns');
 const current = new Date();
 
 class TaskController {
@@ -113,7 +120,7 @@ class TaskController {
 
     //========== LATE ==========//
     async late(req, res) {
-        // recupera todos as tarefas atrasadas e dando certo vai ao "then" e errado vai para o "catch"
+        // recupera todas as tarefas atrasadas e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
                 macaddress: req.body.macaddress,
@@ -129,7 +136,7 @@ class TaskController {
 
     //========== TODAY ==========//
     async today(req, res) {
-        // recupera todos as tarefas atrasadas e dando certo vai ao "then" e errado vai para o "catch"
+        // recupera todas as tarefas do dia e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
                 macaddress: req.body.macaddress,
@@ -145,11 +152,27 @@ class TaskController {
 
     //========== WEEK ==========//
     async week(req, res) {
-        // recupera todos as tarefas atrasadas e dando certo vai ao "then" e errado vai para o "catch"
+        // recupera todas as tarefas da semana e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
                 macaddress: req.body.macaddress,
                 when: { [Op.between]:[startOfWeek(current),endOfWeek(current)] }
+            },
+            order: [['when','ASC']]
+        }).then(response => {
+            return res.status(200).json(response);
+        }).catch(error => {
+            return res.status(500).json(error);
+        });
+    }
+
+    //========== MONTH ==========//
+    async month(req, res) {
+        // recupera todas as tarefas do mês e dando certo vai ao "then" e errado vai para o "catch"
+        await task.findAll({
+            where: {
+                macaddress: req.body.macaddress,
+                when: { [Op.between]:[startOfMonth(current),endOfMonth(current)] }
             },
             order: [['when','ASC']]
         }).then(response => {
