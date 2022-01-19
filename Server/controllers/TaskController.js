@@ -61,7 +61,7 @@ class TaskController {
         // recupera todos os dados e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
-                macaddress: req.body.macaddress 
+                macaddress: req.params.macaddress 
             },
             order: [['when','ASC']]
         }).then(response => {
@@ -125,7 +125,7 @@ class TaskController {
         // recupera todas as tarefas atrasadas e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
-                macaddress: req.body.macaddress,
+                macaddress: req.params.macaddress,
                 when: { [Op.lt]:current }
             },
             order: [['when','ASC']]
@@ -141,7 +141,7 @@ class TaskController {
         // recupera todas as tarefas do dia e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
-                macaddress: req.body.macaddress,
+                macaddress: req.params.macaddress,
                 when: { [Op.between]:[startOfDay(current),endOfDay(current)] }
             },
             order: [['when','ASC']]
@@ -157,7 +157,7 @@ class TaskController {
         // recupera todas as tarefas da semana e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
-                macaddress: req.body.macaddress,
+                macaddress: req.params.macaddress,
                 when: { [Op.between]:[startOfWeek(current),endOfWeek(current)] }
             },
             order: [['when','ASC']]
@@ -173,7 +173,7 @@ class TaskController {
         // recupera todas as tarefas do mês e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
-                macaddress: req.body.macaddress,
+                macaddress: req.params.macaddress,
                 when: { [Op.between]:[startOfMonth(current),endOfMonth(current)] }
             },
             order: [['when','ASC']]
@@ -189,7 +189,7 @@ class TaskController {
         // recupera todas as tarefas do ano e dando certo vai ao "then" e errado vai para o "catch"
         await task.findAll({
             where: {
-                macaddress: req.body.macaddress,
+                macaddress: req.params.macaddress,
                 when: { [Op.between]:[startOfYear(current),endOfYear(current)] }
             },
             order: [['when','ASC']]
