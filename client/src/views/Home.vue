@@ -4,19 +4,19 @@
     <div class="body">
         <div class="container">
             <div class="row">
-                <button class="col filter-card" type="button" v-on:click.stop="this.filter='all'">
-                    <FilterCard title="TODOS" :active="this.filter=='all'" />
+                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('all')">
+                    <FilterCard title="TODOS" :active="filter=='all'" />
                 </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.filter='today'">
+                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('today')">
                     <FilterCard title="HOJE" :active="filter=='today'" />
                 </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.filter='week'">
+                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('week')">
                     <FilterCard title="SEMANA" :active="filter=='week'" />
                 </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.filter='month'">
+                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('month')">
                     <FilterCard title="MÊS" :active="filter=='month'" />
                 </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.filter='year'">
+                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('year')">
                     <FilterCard title="ANO" :active="filter=='year'" />
                 </button>
             </div>
@@ -26,18 +26,14 @@
         </div>
         <div class="container">
             <div class="row">
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
-                <TaskCard title="None" date="none" hour="none" />
+                <template v-if="this.tasks.length > 0">
+                    <TaskCard v-for="t in this.tasks" :key="t.id" :title="t.title" :date="new Date(t.when).toLocaleDateString('pt-BR')" :hour="new Date(t.when).toLocaleString('pt-BR', {hour: 'numeric',minute: 'numeric',hour12: false})" />
+                </template>
+                <template v-else>
+                    <div class="text-center col-12">
+                        <h5>Não há tarefas registradas!</h5>
+                    </div>
+                </template>
             </div>
         </div>
     </div>
@@ -46,13 +42,19 @@
 </template>
 
 <script>
+//============ Bootstrap ============//
 import "bootstrap/dist/css/bootstrap.css";
+//============ Componentes ============//
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
 import FilterCard from "../components/FilterCard.vue";
 import TaskCard from "../components/TaskCard.vue";
+//============ Services ============//
+import serviceTask from "../services/tasks.js";
+
 export default {
     name: "Home",
+
     //============ Componentes ============//
     components: {
         Header,
@@ -60,11 +62,44 @@ export default {
         FilterCard,
         TaskCard
     },
+
+    //============ Métodos ============//
+    methods: {
+        async changeFilter(params) {
+            this.filter = params;
+            this.allTasks(params);
+        }
+    },
+
     //============ Variáveis ============//
     data() {
         return {
             filter: 'today',
         }
+    },
+
+    //============ Setup ============//
+    setup() {
+        // recupera os itens do service
+        const {
+            getTasks,
+            tasks
+        } = serviceTask();
+
+        //.. é definido uma função para ser chamada a qualquer momento
+        const allTasks = async (params) => {
+            await getTasks(params);
+        };
+
+        return {
+            tasks,
+            allTasks,
+        };
+    },
+
+    //============ Created ============//
+    created() {
+        this.allTasks(this.filter);
     },
 };
 </script>

@@ -31,6 +31,11 @@ export default {
     --three: #707070;
 }
 
+.col{
+    display: flex;
+    justify-content: center;
+}
+
 .card {
     height: 200px;
     width: 250px;
