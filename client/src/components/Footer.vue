@@ -27,7 +27,7 @@ export default {
     height: 50px;
     background-color: var(--one);
     border-top: 7px solid var(--two);
-    position: absolute;
+    position: relative;
     bottom: 0;
     align-items: center;
 }
