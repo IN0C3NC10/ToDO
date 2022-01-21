@@ -53,5 +53,6 @@ img {
     color: var(--light);
     text-align: right;
     font-weight: bold;
+    font-size: 15px;
 }
 </style>

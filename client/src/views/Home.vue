@@ -5,19 +5,19 @@
         <div class="container">
             <div class="row">
                 <button class="col filter-card" type="button" v-on:click.stop="this.filter='all'">
-                    <FilterCard title="Todos" :active="this.filter=='all'" />
+                    <FilterCard title="TODOS" :active="this.filter=='all'" />
                 </button>
                 <button class="col filter-card" type="button" v-on:click.stop="this.filter='today'">
-                    <FilterCard title="Hoje" :active="filter=='today'" />
+                    <FilterCard title="HOJE" :active="filter=='today'" />
                 </button>
                 <button class="col filter-card" type="button" v-on:click.stop="this.filter='week'">
-                    <FilterCard title="Semana" :active="filter=='week'" />
+                    <FilterCard title="SEMANA" :active="filter=='week'" />
                 </button>
                 <button class="col filter-card" type="button" v-on:click.stop="this.filter='month'">
-                    <FilterCard title="Mês" :active="filter=='month'" />
+                    <FilterCard title="MÊS" :active="filter=='month'" />
                 </button>
                 <button class="col filter-card" type="button" v-on:click.stop="this.filter='year'">
-                    <FilterCard title="Ano" :active="filter=='year'" />
+                    <FilterCard title="ANO" :active="filter=='year'" />
                 </button>
             </div>
         </div>
@@ -52,13 +52,15 @@ import Footer from "../components/Footer.vue";
 import FilterCard from "../components/FilterCard.vue";
 import TaskCard from "../components/TaskCard.vue";
 export default {
+    name: "Home",
+    //============ Componentes ============//
     components: {
         Header,
         Footer,
         FilterCard,
         TaskCard
     },
-
+    //============ Variáveis ============//
     data() {
         return {
             filter: 'today',
