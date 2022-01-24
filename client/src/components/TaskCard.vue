@@ -2,7 +2,7 @@
 <div class="col">
     <div class="card">
         <div class="card-body">
-            <img src="../assets/defaultTask.png" alt="#" />
+            <img :src="taskIcons[category]" alt="#" />
             <h5>{{ title }}</h5>
         </div>
         <div class="card-footer">
@@ -16,9 +16,19 @@
 </template>
 
 <script>
+//============ Utils ============//
+import taskIcons from "../utils/taskIcons.js";
+
 export default {
     name: "TaskCard",
-    props: ['title', 'date', 'hour'],
+    props: ['title', 'date', 'hour', 'category'],
+
+    //============ Setup ============//
+    setup() {
+        return {
+            taskIcons
+        }
+    }
 };
 </script>
 
@@ -31,7 +41,7 @@ export default {
     --three: #707070;
 }
 
-.col{
+.col {
     display: flex;
     justify-content: center;
 }
