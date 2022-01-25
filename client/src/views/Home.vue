@@ -1,6 +1,6 @@
 <template>
 <div>
-    <Header />
+    <Header :lateCount="this.late" v-on:functionLate="lateTasks" />
     <div class="body">
         <div class="container">
             <div class="row">
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="tasks">
-            <h4 class="task-title">TAREFAS</h4>
+            <h4 class="task-title">{{ this.filter=='late' ? 'TAREFAS ATRASADAS' : 'TAREFAS' }}</h4>
         </div>
         <div class="container">
             <div class="row">
@@ -68,6 +68,11 @@ export default {
         async changeFilter(params) {
             this.filter = params;
             this.allTasks(params);
+        },
+
+        async lateTasks() {
+            this.filter = 'late';
+            this.allTasks(this.filter);
         }
     },
 
@@ -83,23 +88,35 @@ export default {
         // recupera os itens do service
         const {
             getTasks,
-            tasks
+            lateTasks,
+            tasks,
+            late
         } = serviceTask();
 
-        //.. é definido uma função para ser chamada a qualquer momento
+        //.. é definido as funções para serem chamadas a qualquer momento
+        //============ All ============//
         const allTasks = async (params) => {
             await getTasks(params);
         };
 
+        //============ Late Tasks ============//
+        const pastTasks = async () => {
+           await lateTasks();
+        };
+
+        //.. retorna os itens para serem usados pelo vue (funções e variaveis)
         return {
             tasks,
+            late,
             allTasks,
+            pastTasks
         };
     },
 
     //============ Created ============//
     created() {
         this.allTasks(this.filter);
+        this.pastTasks();
     },
 };
 </script>

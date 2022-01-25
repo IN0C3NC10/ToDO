@@ -9,10 +9,10 @@
             <span class="divider" />
             <a class="menu-items" href="#">Sincronizar Celular</a>
             <span class="divider" />
-            <a class="menu-items" href="#" id="bell">
+            <button v-on:click.stop="this.verifyTasks()" class="menu-items" id="bell">
                 <img src="../assets/bell.png" />
-                <span>5</span>
-            </a>
+                <span>{{ lateCount }}</span>
+            </button>
         </div>
     </div>
 </div>
@@ -21,6 +21,15 @@
 <script>
 export default {
     name: "Header",
+    props:['lateCount'],
+
+    //============ Métodos ============//
+    methods: {
+        verifyTasks() {
+            //.. chamo o método enviado da Home
+            this.$emit("functionLate");
+        }
+    },
 };
 </script>
 
@@ -38,7 +47,7 @@ a {
     color: white;
 }
 
-a:hover {
+a:hover, button:hover {
     cursor: pointer;
     color: var(--two);
 }
@@ -65,6 +74,11 @@ a:hover {
     margin: 0 10px;
 }
 
+#bell {
+    background: none;
+    border: none;
+}
+
 #bell img {
     height: 30px;
     width: 25px;
@@ -78,6 +92,7 @@ a:hover {
     position: relative;
     top: -5px;
     right: 15px;
+    font-weight: bold;
 }
 
 #bell img:hover {
