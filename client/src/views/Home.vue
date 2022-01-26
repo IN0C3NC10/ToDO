@@ -1,6 +1,7 @@
 <template>
 <div>
-    <Header :lateCount="this.late" v-on:functionLate="lateTasks" />
+    <!-- <Header :lateCount="this.late" v-on:functionLate="lateTasks" /> -->
+    <router-view/>
     <div class="body">
         <div class="container">
             <div class="row">
@@ -37,7 +38,7 @@
             </div>
         </div>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
 </div>
 </template>
 
@@ -45,8 +46,8 @@
 //============ Bootstrap ============//
 import "bootstrap/dist/css/bootstrap.css";
 //============ Componentes ============//
-import Header from "../components/Header.vue";
-import Footer from "../components/Footer.vue";
+// import Header from "../components/Header.vue";
+// import Footer from "../components/Footer.vue";
 import FilterCard from "../components/FilterCard.vue";
 import TaskCard from "../components/TaskCard.vue";
 //============ Services ============//
@@ -57,8 +58,8 @@ export default {
 
     //============ Componentes ============//
     components: {
-        Header,
-        Footer,
+        // Header,
+        // Footer,
         FilterCard,
         TaskCard
     },
