@@ -2,7 +2,7 @@
 <div class="col">
     <div class="card">
         <div class="card-body">
-            <img :src="taskIcons[category]" alt="#" />
+            <img :src="taskIcons[category].path" alt="Icone da Tarefa" />
             <h5>{{ title }}</h5>
         </div>
         <div class="card-footer">

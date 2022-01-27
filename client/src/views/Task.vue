@@ -5,43 +5,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 icons-list text-center">
-                    <button class="col" v-for="i in taskIcons" :key="i" v-on:click.stop="this.active=i" type="buttom">
-                        <img class="task-icon" :class="active && active != i ? 'inactive' : null" :src="i" alt="Tipo da Tarefa" />
+                    <button class="col" v-for="i in taskIcons" :key="i.id" v-on:click.stop="this.changeType(i.id)" type="buttom">
+                        <template v-if="i.id>0">
+                            <img class="task-icon" :class="form.category!= '' && form.category != i.id ? 'inactive' : null" :src="i.path" alt="Tipo da Tarefa" />
+                        </template>
                     </button>
                 </div>
             </div>
         </div>
         <div class="container">
-            <form class="form">
+            <form class="form" @submit.prevent="saveTask">
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="title">Título</label>
-                        <input type="text" class="form-control" id="title" placeholder="Enter title">
+                        <input v-model="form.title" type="text" class="form-control" id="title" placeholder="Enter title">
                         <small id="titleHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="text">Descrição</label>
-                        <textarea rows="5" class="form-control" id="text" placeholder="Description" />
+                        <textarea v-model="form.description" rows="5" class="form-control" id="text" placeholder="Description" />
                         <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="date">Data</label>
-                        <input type="date" class="form-control" id="date" placeholder="Date">
+                        <input v-model="form.date" type="date" class="form-control" id="date">
                         <img src="../assets/calendar.png" alt="Calendário" />
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="hour">Hora</label>
-                        <input type="time" class="form-control" id="hour" placeholder="Hour">
+                        <input v-model="form.hour" type="time" class="form-control" id="hour">
                         <img src="../assets/clock.png" alt="Relógio" />
                     </div>
                 </div>
                 <div class="row options">
                     <div class="form-check col">
-                        <input type="checkbox" class="form-check-input" id="done">
+                        <input v-model="form.done" type="checkbox" class="form-check-input" id="done">
                         <label class="form-check-label" for="done">CONCLUÍDO</label>
                     </div>
                     <div class="form-group col">
@@ -52,7 +54,7 @@
                     <button type="submit" class="btn bck-two">SALVAR</button>
                 </div>
             </form>
-
+{{ form }}
         </div>
     </div>
     <!-- <Footer /> -->
@@ -69,6 +71,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import serviceTask from "../services/tasks.js";
 //============ Utils ============//
 import taskIcons from "../utils/taskIcons.js";
+//============ Features ============//
+import {
+    reactive
+} from '@vue/reactivity';
 
 export default {
     name: "Task",
@@ -85,14 +91,15 @@ export default {
             this.filter = params;
             this.allTasks(params);
         },
-
+        async changeType(params) {
+            this.form.category = params;
+        },
     },
 
     //============ Variáveis ============//
     data() {
         return {
             filter: 'today',
-            active: false,
         }
     },
 
@@ -100,11 +107,25 @@ export default {
     setup() {
         // recupera os itens do service
         const {
+            tasks,
+            late,
             getTasks,
             lateTasks,
-            tasks,
-            late
+            storeTask,
         } = serviceTask();
+
+        //..dados do formulário, e adicionais que precisam ser salvos
+        const form = reactive({
+            macaddress: '00:00:5e:00:53:af',
+            id: null,
+            title: '',
+            category: '',
+            description: '',
+            when: '',
+            done: false,
+            date: '',
+            hour: '',
+        })
 
         //.. é definido as funções para serem chamadas a qualquer momento
         //============ All ============//
@@ -117,13 +138,23 @@ export default {
             await lateTasks();
         };
 
+        //============ Save Task ============//
+        const saveTask = async () => {
+            form.when = form.date + ' ' + form.hour;
+            await storeTask({
+                ...form
+            });
+        };
+
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
         return {
+            form,
             taskIcons,
             tasks,
             late,
             allTasks,
-            pastTasks
+            pastTasks,
+            saveTask,
         };
     },
 

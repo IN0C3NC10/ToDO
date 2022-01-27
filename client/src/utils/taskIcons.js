@@ -6,12 +6,13 @@ import iconSports from "../assets/sports.png";
 import iconStudy from "../assets/study.png";
 
 const taskIcons = [
-    iconDefault,
-    iconFriends,
-    iconGames,
-    iconShopping,
-    iconSports,
-    iconStudy
+    {id: 0, path: null},
+    {id: 1, path: iconDefault},
+    {id: 2, path: iconFriends},
+    {id: 3, path: iconGames},
+    {id: 4, path: iconShopping},
+    {id: 5, path: iconSports},
+    {id: 6, path: iconStudy},
 ];
 
 export default taskIcons;
