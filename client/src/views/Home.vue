@@ -146,6 +146,12 @@ export default {
     margin-bottom: 20px;
 }
 
+.filter-card {
+    background: none;
+    border: none;
+    margin: 0px;
+}
+
 .tasks {
     width: 100%;
     border-bottom: 1px solid var(--three);
@@ -161,11 +167,5 @@ export default {
     background-color: var(--light);
     padding: 0 10px;
     font-weight: bold;
-}
-
-.filter-card {
-    background: none;
-    border: none;
-    margin: 0px;
 }
 </style>

@@ -6,7 +6,6 @@ import iconSports from "../assets/sports.png";
 import iconStudy from "../assets/study.png";
 
 const taskIcons = [
-    null,
     iconDefault,
     iconFriends,
     iconGames,

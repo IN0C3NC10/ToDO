@@ -4,10 +4,55 @@
     <div class="body">
         <div class="container">
             <div class="row">
-                <div class="text-center col-12">
-                    <h5>Task!</h5>
+                <div class="col-12 icons-list text-center">
+                    <button class="col" v-for="i in taskIcons" :key="i" v-on:click.stop="this.active=i" type="buttom">
+                        <img class="task-icon" :class="active && active != i ? 'inactive' : null" :src="i" alt="Tipo da Tarefa" />
+                    </button>
                 </div>
             </div>
+        </div>
+        <div class="container">
+            <form class="form">
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="title">Título</label>
+                        <input type="text" class="form-control" id="title" placeholder="Enter title">
+                        <small id="titleHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="text">Descrição</label>
+                        <textarea rows="5" class="form-control" id="text" placeholder="Description" />
+                        <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="date">Data</label>
+                        <input type="date" class="form-control" id="date" placeholder="Date">
+                        <img src="../assets/calendar.png" alt="Calendário" />
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="hour">Hora</label>
+                        <input type="time" class="form-control" id="hour" placeholder="Hour">
+                        <img src="../assets/clock.png" alt="Relógio" />
+                    </div>
+                </div>
+                <div class="row options">
+                    <div class="form-check col">
+                        <input type="checkbox" class="form-check-input" id="done">
+                        <label class="form-check-label" for="done">CONCLUÍDO</label>
+                    </div>
+                    <div class="form-group col">
+                        <button type="button">EXCLUIR</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn bck-two">SALVAR</button>
+                </div>
+            </form>
+
         </div>
     </div>
     <!-- <Footer /> -->
@@ -22,6 +67,8 @@ import "bootstrap/dist/css/bootstrap.css";
 // import Footer from "../components/Footer.vue";
 //============ Services ============//
 import serviceTask from "../services/tasks.js";
+//============ Utils ============//
+import taskIcons from "../utils/taskIcons.js";
 
 export default {
     name: "Task",
@@ -39,13 +86,13 @@ export default {
             this.allTasks(params);
         },
 
-        
     },
 
     //============ Variáveis ============//
     data() {
         return {
             filter: 'today',
+            active: false,
         }
     },
 
@@ -72,6 +119,7 @@ export default {
 
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
         return {
+            taskIcons,
             tasks,
             late,
             allTasks,
@@ -102,6 +150,16 @@ export default {
     color: var(--dark);
 }
 
+.bck-one {
+    background-color: var(--one);
+    color: var(--light);
+}
+
+.bck-two {
+    background-color: var(--two);
+    color: var(--light);
+}
+
 .body {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -109,5 +167,100 @@ export default {
 
 .container {
     margin-bottom: 20px;
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+button:hover,
+a:hover {
+    opacity: 0.7;
+}
+
+.icons-list {
+    width: 100%;
+}
+
+.icons-list button {
+    background: none;
+    border: none;
+}
+
+.task-icon {
+    margin-right: 20px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.task-icon:hover {
+    opacity: 0.5;
+}
+
+.inactive {
+    opacity: 0.5;
+}
+
+.form {
+    margin: 0 20% 0 20%;
+}
+
+.form label {
+    color: var(--three);
+    margin-bottom: 5px;
+    font-weight: bold;
+    margin: 10px 0px;
+}
+
+.form .form-control {
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid var(--two);
+}
+
+.form img {
+    height: 30px;
+    position: relative;
+    left: 92%;
+    bottom: 40px;
+}
+
+.options .form-check {
+    text-align: start;
+}
+
+.options .form-check input {
+    border: 1px solid var(--two);
+    font-size: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.options .form-check label {
+    font-weight: bold;
+    color: var(--two);
+    margin-top: 2px;
+}
+
+.options .form-group {
+    text-align: end;
+}
+
+.options .form-group button {
+    color: var(--one);
+    font-weight: bold;
+    border: none;
+    background: none;
+}
+
+.btn {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
 }
 </style>
