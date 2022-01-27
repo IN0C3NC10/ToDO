@@ -185,10 +185,11 @@ button:hover {
 .icons-list button {
     background: none;
     border: none;
+    align-content: center;
+    margin: 0 10px;
 }
 
 .task-icon {
-    margin-right: 20px;
     height: 70px;
     cursor: pointer;
 }
