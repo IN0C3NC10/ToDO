@@ -174,8 +174,7 @@ a {
     cursor: pointer;
 }
 
-button:hover,
-a:hover {
+button:hover {
     opacity: 0.7;
 }
 
@@ -216,6 +215,7 @@ a:hover {
 .form .form-control {
     font-size: 16px;
     padding: 12px;
+    color: var(--dark);
     border: none;
     border-bottom: 1px solid var(--two);
 }
@@ -223,8 +223,8 @@ a:hover {
 .form img {
     height: 30px;
     position: relative;
-    left: 92%;
-    bottom: 40px;
+    left: 90%;
+    bottom: 70px;
 }
 
 .options .form-check {
@@ -236,6 +236,11 @@ a:hover {
     font-size: 20px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.form-check-input:checked {
+    background-color: var(--two);
+    border-color: var(--two);
 }
 
 .options .form-check label {
@@ -262,5 +267,9 @@ a:hover {
     border: none;
     padding: 15px;
     border-radius: 30px;
+}
+
+.btn:hover {
+    color: var(--light);
 }
 </style>
