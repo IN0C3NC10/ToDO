@@ -1,7 +1,7 @@
 <template>
 <div>
     <!-- <Header :lateCount="this.late" v-on:functionLate="lateTasks" /> -->
-    <router-view/>
+    <router-view />
     <div class="body">
         <div class="container">
             <div class="row">
@@ -28,7 +28,7 @@
         <div class="container">
             <div class="row">
                 <template v-if="this.tasks.length > 0">
-                    <TaskCard v-for="t in this.tasks" :key="t.id" :title="t.title" :category="t.category" :date="new Date(t.when).toLocaleDateString('pt-BR')" :hour="new Date(t.when).toLocaleString('pt-BR', {hour: 'numeric',minute: 'numeric',hour12: false})" />
+                    <TaskCard v-for="t in this.tasks" :key="t.id" :id="t.id" :title="t.title" :category="t.category" :date="new Date(t.when).toLocaleDateString('pt-BR')" :hour="new Date(t.when).toLocaleString('pt-BR', {hour: 'numeric',minute: 'numeric',hour12: false})" />
                 </template>
                 <template v-else>
                     <div class="text-center col-12">
@@ -102,7 +102,7 @@ export default {
 
         //============ Late Tasks ============//
         const pastTasks = async () => {
-           await lateTasks();
+            await lateTasks();
         };
 
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
@@ -135,6 +135,11 @@ export default {
     @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
     font-family: 'Ubuntu', sans-serif;
     color: var(--dark);
+}
+
+a{
+    text-decoration: none;
+    color:var(--dark)
 }
 
 .body {

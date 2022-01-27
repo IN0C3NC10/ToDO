@@ -5,12 +5,18 @@ import Task from '../views/Task.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
-    path: '/Task',
-    name: 'Task',
+    path: '/task',
+    name: 'task.create',
+    component: Task
+  },
+  {
+    path: '/task/:id',
+    props: true,
+    name: 'task.edit',
     component: Task
   }
 ]

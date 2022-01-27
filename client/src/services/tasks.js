@@ -4,6 +4,7 @@ import { ref } from 'vue';
 export default function serviceTasks() {
     const url = 'http://localhost:3000/';
     const tasks = ref([]);
+    const task = ref([]);
     const late = ref();
     const errors = ref('');
 
@@ -37,12 +38,20 @@ export default function serviceTasks() {
         }
     }
 
+    //============= GET TASK =============//
+    const getTask = async (id) => {
+        let response = await axios.get(url + 'task/' + id);
+        task.value = response.data;
+    }
+
     return {
         errors,
         tasks,
+        task,
         late,
         getTasks,
         lateTasks,
-        storeTask
+        storeTask,
+        getTask,
     }
 }

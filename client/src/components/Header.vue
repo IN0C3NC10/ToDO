@@ -5,7 +5,7 @@
         <div class="col-6 menu">
             <a class="menu-items" href="#">Inicio</a>
             <span class="divider" />
-            <router-link :to="{name:'Task'}">Nova Tarefa</router-link>
+            <router-link :to="{name:'task.create'}">Nova Tarefa</router-link>
             <span class="divider" />
             <a class="menu-items" href="#">Sincronizar Celular</a>
             <span class="divider" />

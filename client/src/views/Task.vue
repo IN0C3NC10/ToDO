@@ -54,7 +54,7 @@
                     <button type="submit" class="btn bck-two">SALVAR</button>
                 </div>
             </form>
-{{ form }}
+{{ form }} {{ task }}
         </div>
     </div>
     <!-- <Footer /> -->
@@ -75,9 +75,21 @@ import taskIcons from "../utils/taskIcons.js";
 import {
     reactive
 } from '@vue/reactivity';
+// import { onMounted } from '@vue/runtime-core';
+import {
+    format
+} from 'date-fns';
 
 export default {
     name: "Task",
+
+    //============ Propriedades Enviadas ============//
+    props: {
+        id: {
+            required: false,
+            type: String,
+        },
+    },
 
     //============ Componentes ============//
     components: {
@@ -87,10 +99,6 @@ export default {
 
     //============ Métodos ============//
     methods: {
-        async changeFilter(params) {
-            this.filter = params;
-            this.allTasks(params);
-        },
         async changeType(params) {
             this.form.category = params;
         },
@@ -104,19 +112,18 @@ export default {
     },
 
     //============ Setup ============//
-    setup() {
+    setup(props) {
         // recupera os itens do service
         const {
-            tasks,
+            task,
             late,
-            getTasks,
-            lateTasks,
+            getTask,
             storeTask,
         } = serviceTask();
 
         //..dados do formulário, e adicionais que precisam ser salvos
         const form = reactive({
-            macaddress: '00:00:5e:00:53:af',
+            macaddress: '',
             id: null,
             title: '',
             category: '',
@@ -125,21 +132,22 @@ export default {
             done: false,
             date: '',
             hour: '',
-        })
+        });
+
+        // ..recupera a tarefa pelo id
+        if (props.id != null) {
+            getTask(props.id);
+        }
 
         //.. é definido as funções para serem chamadas a qualquer momento
-        //============ All ============//
-        const allTasks = async (params) => {
-            await getTasks(params);
-        };
-
-        //============ Late Tasks ============//
-        const pastTasks = async () => {
-            await lateTasks();
+        //============ Get Task ============//
+        const setTask = async (params) => {
+            await getTask(params);
         };
 
         //============ Save Task ============//
         const saveTask = async () => {
+            form.macaddress = '00:00:5e:00:53:af';
             form.when = form.date + ' ' + form.hour;
             await storeTask({
                 ...form
@@ -150,18 +158,27 @@ export default {
         return {
             form,
             taskIcons,
-            tasks,
+            task,
             late,
-            allTasks,
-            pastTasks,
+            setTask,
             saveTask,
         };
     },
 
-    //============ Created ============//
-    created() {
-        this.allTasks(this.filter);
-        this.pastTasks();
+    //============ Updated ============//
+    updated() {
+        //  recupera os dados e os atribui de forma separada (somente quando existir uma Task)
+        // lembrando que não é a maneira + adequada devido as requisições constantes
+        if (this.task.macaddress != this.form.macaddress && this.task.macaddress != null) {
+            this.form.macaddress = this.task.macaddress;
+            this.form.id = this.task.id;
+            this.form.title = this.task.title;
+            this.form.category = this.task.category;
+            this.form.description = this.task.description;
+            this.form.done = this.task.done;
+            this.form.date = format(new Date(this.task.when), 'yyyy-MM-dd');
+            this.form.hour = format(new Date(this.task.when), 'HH:mm');
+        }
     },
 };
 </script>

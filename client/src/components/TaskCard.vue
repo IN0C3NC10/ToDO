@@ -1,17 +1,19 @@
 <template>
 <div class="col">
-    <div class="card">
-        <div class="card-body">
-            <img :src="taskIcons[category].path" alt="Icone da Tarefa" />
-            <h5>{{ title }}</h5>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <strong class="col">{{ date }}</strong>
-                <span class="col">{{ hour }}</span>
+    <router-link :to="{name: 'task.edit',params:{id:id}}">
+        <div class="card">
+            <div class="card-body">
+                <img :src="taskIcons[category].path" alt="Icone da Tarefa" />
+                <h5>{{ title }}</h5>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <strong class="col">{{ date }}</strong>
+                    <span class="col">{{ hour }}</span>
+                </div>
             </div>
         </div>
-    </div>
+    </router-link>
 </div>
 </template>
 
@@ -21,7 +23,7 @@ import taskIcons from "../utils/taskIcons.js";
 
 export default {
     name: "TaskCard",
-    props: ['title', 'date', 'hour', 'category'],
+    props: ['id', 'title', 'date', 'hour', 'category'],
 
     //============ Setup ============//
     setup() {
@@ -44,6 +46,10 @@ export default {
 .col {
     display: flex;
     justify-content: center;
+}
+
+.col a:hover {
+    color: var(--dark);
 }
 
 .card {
