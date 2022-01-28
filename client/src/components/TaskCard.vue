@@ -1,7 +1,7 @@
 <template>
 <div class="col">
     <router-link :to="{name: 'task.edit',params:{id:id}}">
-        <div class="card">
+        <div class="card" :style="done ? 'opacity:0.5': null">
             <div class="card-body">
                 <img :src="taskIcons[category].path" alt="Icone da Tarefa" />
                 <h5>{{ title.substr(0,20) }}..</h5>
@@ -23,7 +23,7 @@ import taskIcons from "../utils/taskIcons.js";
 
 export default {
     name: "TaskCard",
-    props: ['id', 'title', 'date', 'hour', 'category'],
+    props: ['id', 'done', 'title', 'date', 'hour', 'category'],
 
     //============ Setup ============//
     setup() {

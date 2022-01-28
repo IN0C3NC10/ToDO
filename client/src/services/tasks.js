@@ -27,8 +27,8 @@ export default function serviceTasks() {
         errors.value = '';
         try {
             if (data.id != null) {
+                // ..Altera os dados e redireciona para a rota de listagem
                 await axios.put(url + 'task/' + data.id, data);
-                // ..redireciona para a rota de listagem
                 await router.push({ name: 'home' });
             } else {
                 await axios.post(url + 'task', data);

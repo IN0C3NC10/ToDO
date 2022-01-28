@@ -47,7 +47,7 @@ class TaskController {
         Task.title = req.body.title ? req.body.title : Task._previousDataValues.title;
         Task.description = req.body.description ? req.body.description : Task._previousDataValues.description;
         Task.when = req.body.when ? req.body.when : Task._previousDataValues.when;
-        Task.done = req.body.done ? req.body.done : Task._previousDataValues.done;
+        Task.done = req.body.done!= null ? req.body.done : Task._previousDataValues.done;
         Task.updatedAt = new Date();
         Task.save().then(response => {
             return res.status(200).json(response);
