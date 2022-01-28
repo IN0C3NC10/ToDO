@@ -13,8 +13,6 @@ const TaskValidation = async (req, res, next) => {
             return res.status(400).json({ error: 'MAC Address é obrigatório!' });
         else if (!when)
             return res.status(400).json({ error: 'Data e Hora são obrigatórios!' });
-        else if (isPast(new Date(when)))
-            return res.status(400).json({ error: 'Defina uma Data e Hora futura!' });
         else {
             let exists;
             /*

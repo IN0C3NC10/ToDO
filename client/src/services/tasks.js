@@ -49,6 +49,15 @@ export default function serviceTasks() {
         task.value = response.data;
     }
 
+    //============= DESTROY TASK =============//
+    const destroyTask = async (id) => {
+        let response = await axios.delete(url + 'task/' + id);
+        // ..caso tenha dado tudo certo
+        if (response.status === 200) {
+            await router.push({ name: 'home' });
+        }
+    }
+
     return {
         errors,
         tasks,
@@ -58,5 +67,6 @@ export default function serviceTasks() {
         lateTasks,
         storeTask,
         getTask,
+        destroyTask
     }
 }

@@ -51,8 +51,8 @@
                         <input v-model="form.done" type="checkbox" class="form-check-input" id="done">
                         <label class="form-check-label" for="done">CONCLUÍDO</label>
                     </div>
-                    <div class="form-group col">
-                        <button type="button">EXCLUIR</button>
+                    <div class="form-group col" v-if="form.id!=null">
+                        <button type="button" v-on:click.stop="this.deleteTask(form.id)">EXCLUIR</button>
                     </div>
                 </div>
                 <div class="row">
@@ -104,9 +104,12 @@ export default {
 
     //============ Métodos ============//
     methods: {
+        // ..alterar as categorias
         async changeType(params) {
             this.form.category = params;
         },
+
+        // ..verificar itens em branco do form
         checkForm() {
             this.validation.title = '';
             this.validation.category = '';
@@ -151,6 +154,7 @@ export default {
             late,
             getTask,
             storeTask,
+            destroyTask
         } = serviceTask();
 
         //..dados do formulário, e adicionais que precisam ser salvos
@@ -186,6 +190,13 @@ export default {
             });
         };
 
+        //============ Delete Task ============//
+        const deleteTask = async (id) => {
+            if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
+                await destroyTask(id);
+            }
+        };
+
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
         return {
             form,
@@ -194,6 +205,7 @@ export default {
             late,
             setTask,
             saveTask,
+            deleteTask
         };
     },
 
