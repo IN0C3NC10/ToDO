@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-body">
                 <img :src="taskIcons[category].path" alt="Icone da Tarefa" />
-                <h5>{{ title }}</h5>
+                <h5>{{ title.substr(0,20) }}..</h5>
             </div>
             <div class="card-footer">
                 <div class="row">

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default function serviceTasks() {
     const url = 'http://localhost:3000/';
@@ -7,6 +8,7 @@ export default function serviceTasks() {
     const task = ref([]);
     const late = ref();
     const errors = ref('');
+    const router = useRouter();
 
     //============= GET TASKS =============//
     const getTasks = async (filter) => {
@@ -23,11 +25,14 @@ export default function serviceTasks() {
     //============= STORE TASK =============//
     const storeTask = async (data) => {
         errors.value = '';
-        let response = await axios.get(url + 'task/filter/late/00:00:5e:00:53:af');
-        late.value = response.data.length;
-
         try {
-            await axios.post(url + 'task', data);
+            if (data.id != null) {
+                await axios.put(url + 'task/' + data.id, data);
+                // ..redireciona para a rota de listagem
+                await router.push({ name: 'home' });
+            } else {
+                await axios.post(url + 'task', data);
+            }
         } catch (e) {
             if (e.response.status === 422) {
                 // ..caso algum problema de validação seja encontrado ele percorre os erros e os agrupa noo mesmo item 
