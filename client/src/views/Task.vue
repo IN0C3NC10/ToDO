@@ -10,23 +10,25 @@
                             <img class="task-icon" :class="form.category!= '' && form.category != i.id ? 'inactive' : null" :src="i.path" alt="Tipo da Tarefa" />
                         </template>
                     </button>
+                    <br /><br />
+                    <small class="form-text validation">{{ validation.category }}</small>
                 </div>
             </div>
         </div>
         <div class="container">
-            <form class="form" @submit.prevent="saveTask">
+            <form class="form" @submit.prevent="checkForm">
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="title">Título</label>
                         <input v-model="form.title" type="text" class="form-control" id="title" placeholder="Enter title">
-                        <small id="titleHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <small class="form-text validation">{{ validation.title }}</small>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="text">Descrição</label>
                         <textarea v-model="form.description" rows="5" class="form-control" id="text" placeholder="Description" />
-                        <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <small class="form-text validation">{{ validation.description }}</small>
                     </div>
                 </div>
                 <div class="row">
@@ -34,11 +36,14 @@
                         <label for="date">Data</label>
                         <input v-model="form.date" type="date" class="form-control" id="date">
                         <img src="../assets/calendar.png" alt="Calendário" />
+                        <small class="form-text validation">{{ validation.date }}</small>
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="hour">Hora</label>
                         <input v-model="form.hour" type="time" class="form-control" id="hour">
+
                         <img src="../assets/clock.png" alt="Relógio" />
+                        <small class="form-text validation">{{ validation.hour }}</small>
                     </div>
                 </div>
                 <div class="row options">
@@ -102,12 +107,39 @@ export default {
         async changeType(params) {
             this.form.category = params;
         },
+        checkForm() {
+            this.validation.title = '';
+            this.validation.category = '';
+            this.validation.description = '';
+            this.validation.date = '';
+            this.validation.hour = '';
+            if (!this.form.title) {
+                return this.validation.title = 'Informe o título!';
+            } else if (!this.form.description) {
+                return this.validation.description = 'Informe a descrição!';
+            } else if (!this.form.date) {
+                return this.validation.date = 'Defina uma data!';
+            } else if (!this.form.hour) {
+                return this.validation.hour = 'Defina uma hora!';
+            } else if (!this.form.category) {
+                return this.validation.category = 'Selecione uma categoria!';
+            } else {
+                this.saveTask();
+            }
+        },
     },
 
     //============ Variáveis ============//
     data() {
         return {
             filter: 'today',
+            validation: {
+                title: '',
+                category: '',
+                description: '',
+                date: '',
+                hour: '',
+            }
         }
     },
 
@@ -276,8 +308,9 @@ button:hover {
     bottom: 70px;
 }
 
-.options .form-check {
+.options {
     text-align: start;
+    margin-top: 20px;
 }
 
 .options .form-check input {
@@ -320,5 +353,9 @@ button:hover {
 
 .btn:hover {
     color: var(--light);
+}
+
+.validation {
+    color: red;
 }
 </style>
