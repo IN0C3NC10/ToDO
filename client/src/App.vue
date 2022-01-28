@@ -1,6 +1,6 @@
 <template>
 <div>
-    <Header :lateCount="this.late" v-on:functionLate="lateTasks" />
+    <Header :lateCount="this.late" />
     <router-view />
     <Footer />
 </div>
@@ -22,14 +22,6 @@ export default {
     components: {
         Header,
         Footer,
-    },
-
-    //============ Métodos ============//
-    methods: {
-        async lateTasks() {
-            this.filter = 'late';
-            this.allTasks(this.filter);
-        }
     },
 
     //============ Variáveis ============//
