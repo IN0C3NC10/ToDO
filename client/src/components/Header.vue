@@ -24,7 +24,10 @@
 </template>
 
 <script>
+//============ Utils ============//
 import isConnected from '../utils/isConnected.js';
+//============ Features ============//
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default {
     name: "Header",
@@ -34,8 +37,21 @@ export default {
     methods: {
         //..função responsável por desconectar o usuário
         async destroyMac() {
-            localStorage.removeItem('@todo/macaddress');
-            window.location.reload();
+            Swal.fire({
+                title: 'Deseja realmente sair?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                denyButtonText: 'Não',
+                confirmButtonColor: '#1b2c86',
+                cancelButtonColor: '#333',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('@todo/macaddress');
+                    window.location.reload();
+                }
+            });
+
         },
     },
 
@@ -118,7 +134,7 @@ button:hover {
 }
 
 #bell img:hover {
-    opacity: 0.7;
+    transform: scale(1.2);
 }
 
 .divider::after {

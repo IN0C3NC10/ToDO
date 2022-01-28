@@ -4,7 +4,7 @@
         <div class="card" :style="done ? 'opacity:0.5': null">
             <div class="card-body">
                 <img :src="taskIcons[category].path" alt="Icone da Tarefa" />
-                <h5>{{ title.substr(0,20) }}..</h5>
+                <h5>{{ title.substr(0,20) }}..</h5><template v-if="done"><span class="badge bck-two">Concluído</span></template>
             </div>
             <div class="card-footer">
                 <div class="row">
@@ -43,6 +43,12 @@ export default {
     --three: #707070;
 }
 
+.badge{
+    position: absolute;
+    top:0px;
+    right: 0px;
+}
+
 .col {
     display: flex;
     justify-content: center;
@@ -62,7 +68,7 @@ export default {
 }
 
 .card:hover {
-    opacity: 0.6;
+    box-shadow: 5px 5px 25px -1px #000000;
     cursor: pointer;
 }
 

@@ -28,12 +28,14 @@ export default function serviceTasks() {
         errors.value = '';
         try {
             if (data.id != null) {
-                // ..Altera os dados e redireciona para a rota de listagem
+                // ..Altera os dados
                 await axios.put(url + 'task/' + data.id, data);
-                await router.push({ name: 'home' });
             } else {
+                // ..Insere os dados
                 await axios.post(url + 'task', data);
             }
+            // ..Redireciona para a rota de listagem
+            await router.push({ name: 'home' });
         } catch (e) {
             if (e.response.status === 422) {
                 // ..caso algum problema de validação seja encontrado ele percorre os erros e os agrupa noo mesmo item 

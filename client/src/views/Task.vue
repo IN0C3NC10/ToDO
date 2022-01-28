@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="title">Título</label>
-                        <input v-model="form.title" type="text" class="form-control" id="title" placeholder="Enter title">
+                        <input v-model="form.title" type="text" class="form-control" id="title" placeholder="Preencha com o título da tarefa..">
                         <input v-model="task.title" v-if="task.title!=null" type="text" hidden>
                         <small class="form-text validation">{{ validation.title }}</small>
                     </div>
@@ -27,22 +27,21 @@
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="text">Descrição</label>
-                        <textarea v-model="form.description" rows="5" class="form-control" id="text" placeholder="Description" />
+                        <textarea v-model="form.description" rows="5" class="form-control" id="text" placeholder="Preencha com uma breve descrição da tarefa.." />
                         <small class="form-text validation">{{ validation.description }}</small>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="date">Data</label>
-                        <input v-model="form.date" type="date" class="form-control" id="date">
-                        <img src="../assets/calendar.png" alt="Calendário" />
+                        <input v-model="form.date" type="text" onfocus="(this.type='date')" class="form-control" id="date" placeholder="Estabeleça a data da tarefa..">
+                        <img class="img-input" src="../assets/calendar.png" alt="Calendário" />
                         <small class="form-text validation">{{ validation.date }}</small>
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="hour">Hora</label>
-                        <input v-model="form.hour" type="time" class="form-control" id="hour">
-
-                        <img src="../assets/clock.png" alt="Relógio" />
+                        <input v-model="form.hour" type="text" onfocus="(this.type='time')" class="form-control" id="hour" placeholder="Estabeleça a hora da tarefa..">
+                        <img class="img-input" src="../assets/clock.png" alt="Relógio" />
                         <small class="form-text validation">{{ validation.hour }}</small>
                     </div>
                 </div>
@@ -52,7 +51,7 @@
                         <label class="form-check-label" for="done">CONCLUÍDO</label>
                     </div>
                     <div class="form-group col" v-if="form.id!=null">
-                        <button type="button" v-on:click.stop="this.deleteTask(form.id)">EXCLUIR</button>
+                        <button type="button" v-on:click.stop="this.deleteAlert(task.id)">EXCLUIR <img class="img-delete" src="../assets/trash.png" alt="Lixeira" /></button>
                     </div>
                 </div>
                 <div class="row">
@@ -77,6 +76,7 @@ import {
 import {
     format
 } from 'date-fns';
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default {
     name: "Task",
@@ -116,6 +116,28 @@ export default {
             } else {
                 this.saveTask();
             }
+        },
+
+        deleteAlert(id) {
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Você não poderá reverter isto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1b2c86',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, deletar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Deletado!',
+                        text: 'Sua tarefa foi deletada.',
+                        icon: 'success',
+                        confirmButtonColor: '#1b2c86',
+                    });
+                    this.deleteTask(id);
+                }
+            })
         },
     },
 
@@ -178,9 +200,7 @@ export default {
 
         //============ Delete Task ============//
         const deleteTask = async (id) => {
-            if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
-                await destroyTask(id);
-            }
+            await destroyTask(id);
         };
 
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
@@ -264,11 +284,18 @@ export default {
     border-bottom: 1px solid var(--two);
 }
 
-.form img {
+.form img{
     height: 30px;
+}
+
+.form .img-input {
     position: relative;
     left: 90%;
     bottom: 70px;
+}
+
+.form .img-delete {
+    height: 20px;
 }
 
 .options {
