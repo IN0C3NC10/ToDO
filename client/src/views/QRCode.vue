@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="container">
-            <form class="form" @submit.prevent="checkForm">
+            <form class="form" @submit.prevent="saveMac">
                 <div class="row">
                     <div class="form-group col-12">
                         <Cleave v-model="this.macaddress" type="text" class="form-control" id="macaddress" placeholder="Digite os números que apareceram" :options="{  blocks: [2, 2, 2, 2, 2, 2], delimiter: ':' }" />
@@ -46,12 +46,14 @@ export default {
     //============ Métodos ============//
     methods: {
         // ..verificar itens em branco do form
-        checkForm() {
+        async saveMac() {
             this.macaddressValidation = '';
             if (!this.macaddress) {
                 return this.macaddressValidation = 'Informe os números que apareceram no seu celular!';
             } else {
-                //
+                //.. registra o macaddress localmente e recarrega a página p/ 'liberar' o usuário
+                await localStorage.setItem('@todo/macaddress',this.macaddress);
+                window.location.reload();
             }
         },
     },

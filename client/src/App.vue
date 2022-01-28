@@ -1,7 +1,7 @@
 <template>
 <div>
     <Header :lateCount="this.late" v-on:functionLate="lateTasks" />
-    <router-view/>
+    <router-view />
     <Footer />
 </div>
 </template>
@@ -50,13 +50,13 @@ export default {
         //.. é definido as funções para serem chamadas a qualquer momento
         //============ Late Tasks ============//
         const pastTasks = async () => {
-           await lateTasks();
+            await lateTasks();
         };
 
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
         return {
             late,
-            pastTasks
+            pastTasks,
         };
     },
 
