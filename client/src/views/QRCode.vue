@@ -79,24 +79,6 @@ export default {
     --three: #707070;
 }
 
-.body {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.container {
-    margin-bottom: 20px;
-}
-
-button,
-a {
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.7;
-}
-
 .title {
     color: var(--two);
     text-transform: uppercase;
@@ -119,10 +101,5 @@ button:hover {
 
 .form input {
     text-align: center;
-}
-
-.btn:hover {
-    opacity: 1;
-    background-color: var(--one);
 }
 </style>

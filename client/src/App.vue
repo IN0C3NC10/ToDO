@@ -82,6 +82,30 @@ export default {
     color: var(--dark);
 }
 
+.bck-one {
+    background-color: var(--one);
+    color: var(--light);
+}
+
+.bck-two {
+    background-color: var(--two);
+    color: var(--light);
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: var(--dark)
+}
+
+button:hover {
+    background-color: var(--one);
+}
+
 .body {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -89,28 +113,5 @@ export default {
 
 .container {
     margin-bottom: 20px;
-}
-
-.tasks {
-    width: 100%;
-    border-bottom: 1px solid var(--three);
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.task-title {
-    color: var(--one);
-    position: relative;
-    top: 23px;
-    background-color: var(--light);
-    padding: 0 10px;
-    font-weight: bold;
-}
-
-.filter-card {
-    background: none;
-    border: none;
-    margin: 0px;
 }
 </style>

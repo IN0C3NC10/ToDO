@@ -20,6 +20,7 @@
                     <div class="form-group col-12">
                         <label for="title">Título</label>
                         <input v-model="form.title" type="text" class="form-control" id="title" placeholder="Enter title">
+                        <input v-model="task.title" v-if="task.title!=null" type="text" hidden>
                         <small class="form-text validation">{{ validation.title }}</small>
                     </div>
                 </div>
@@ -64,8 +65,6 @@
 </template>
 
 <script>
-//============ Bootstrap ============//
-import "bootstrap/dist/css/bootstrap.css";
 //============ Services ============//
 import serviceTask from "../services/tasks.js";
 //============ Utils ============//
@@ -222,40 +221,6 @@ export default {
     --three: #707070;
 }
 
-#app {
-    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
-    font-family: 'Ubuntu', sans-serif;
-    color: var(--dark);
-}
-
-.bck-one {
-    background-color: var(--one);
-    color: var(--light);
-}
-
-.bck-two {
-    background-color: var(--two);
-    color: var(--light);
-}
-
-.body {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.container {
-    margin-bottom: 20px;
-}
-
-button,
-a {
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.7;
-}
-
 .icons-list {
     width: 100%;
 }
@@ -273,7 +238,7 @@ button:hover {
 }
 
 .task-icon:hover {
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
 .inactive {

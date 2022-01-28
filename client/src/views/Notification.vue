@@ -1,28 +1,8 @@
 <template>
 <div>
-    <router-view />
     <div class="body">
-        <div class="container">
-            <div class="row">
-                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('all')">
-                    <FilterCard title="TODOS" :active="filter=='all'" />
-                </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('today')">
-                    <FilterCard title="HOJE" :active="filter=='today'" />
-                </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('week')">
-                    <FilterCard title="SEMANA" :active="filter=='week'" />
-                </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('month')">
-                    <FilterCard title="MÊS" :active="filter=='month'" />
-                </button>
-                <button class="col filter-card" type="button" v-on:click.stop="this.changeFilter('year')">
-                    <FilterCard title="ANO" :active="filter=='year'" />
-                </button>
-            </div>
-        </div>
         <div class="tasks">
-            <h4 class="task-title">{{ this.filter=='late' ? 'TAREFAS ATRASADAS' : 'TAREFAS' }}</h4>
+            <h4 class="task-title">TAREFAS ATRASADAS</h4>
         </div>
         <div class="container">
             <div class="row">
@@ -31,7 +11,7 @@
                 </template>
                 <template v-else>
                     <div class="text-center col-12">
-                        <h5>Não há tarefas registradas!</h5>
+                        <h5>Não há tarefas atrasadas!</h5>
                     </div>
                 </template>
             </div>
@@ -42,32 +22,22 @@
 
 <script>
 //============ Componentes ============//
-import FilterCard from "../components/FilterCard.vue";
 import TaskCard from "../components/TaskCard.vue";
 //============ Services ============//
 import serviceTask from "../services/tasks.js";
 
 export default {
-    name: "Home",
+    name: "Notification",
 
     //============ Componentes ============//
     components: {
-        FilterCard,
         TaskCard
-    },
-
-    //============ Métodos ============//
-    methods: {
-        async changeFilter(params) {
-            this.filter = params;
-            this.allTasks(params);
-        },
     },
 
     //============ Variáveis ============//
     data() {
         return {
-            filter: 'today',
+            //
         }
     },
 
@@ -75,14 +45,14 @@ export default {
     setup() {
         // recupera os itens do service
         const {
-            getTasks,
             tasks,
+            getTasks,
         } = serviceTask();
 
         //.. é definido as funções para serem chamadas a qualquer momento
         //============ All ============//
-        const allTasks = async (params) => {
-            await getTasks(params);
+        const allTasks = async () => {
+            await getTasks('late');
         };
 
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
@@ -94,24 +64,18 @@ export default {
 
     //============ Created ============//
     created() {
-        this.allTasks(this.filter);
+        this.allTasks();
     },
 };
 </script>
 
-<style scoped>
+<style>
 :root {
     --light: #fff;
     --dark: #333;
     --one: #1b2c86;
     --two: #f4970b;
     --three: #707070;
-}
-
-.filter-card {
-    background: none;
-    border: none;
-    margin: 0px;
 }
 
 .tasks {

@@ -14,10 +14,10 @@
                 <router-link :to="{name:'qrcode'}">Sincronizar Celular</router-link>
             </template>
             <span class="divider" />
-             <button id="bell">
+            <router-link :to="{name:'notify'}" id="bell">
                 <img src="../assets/bell.png" />
                 <span v-if="lateCount > 0">{{ lateCount }}</span>
-            </button>
+            </router-link>
         </div>
     </div>
 </div>
@@ -33,7 +33,7 @@ export default {
     //============ Métodos ============//
     methods: {
         //..função responsável por desconectar o usuário
-        async destroyMac(){
+        async destroyMac() {
             localStorage.removeItem('@todo/macaddress');
             window.location.reload();
         },

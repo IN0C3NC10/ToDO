@@ -3,6 +3,7 @@ import isConnected from '../utils/isConnected.js';
 import Home from '../views/Home.vue';
 import Task from '../views/Task.vue';
 import QRCode from '../views/QRCode.vue';
+import Notification from '../views/Notification.vue';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/synchronize',
     name: 'qrcode',
     component: QRCode
+  },
+  {
+    path: '/notification',
+    name: 'notify',
+    component: Notification
   },
 ]
 
