@@ -45,14 +45,16 @@ export default {
 
     //============ Métodos ============//
     methods: {
-        // ..verificar itens em branco do form
+        // ..verificar itens e salva o Mac
         async saveMac() {
             this.macaddressValidation = '';
             if (!this.macaddress) {
                 return this.macaddressValidation = 'Informe os números que apareceram no seu celular!';
+            } else if (this.macaddress.length < 12) {
+                return this.macaddressValidation = 'Termine de digitar!';
             } else {
                 //.. registra o macaddress localmente e recarrega a página p/ 'liberar' o usuário
-                await localStorage.setItem('@todo/macaddress',this.macaddress);
+                await localStorage.setItem('@todo/macaddress', this.macaddress);
                 window.location.reload();
             }
         },

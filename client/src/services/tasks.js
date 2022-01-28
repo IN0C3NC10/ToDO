@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import mac from '../utils/isConnected.js';
 
 export default function serviceTasks() {
     const url = 'http://localhost:3000/';
@@ -12,13 +13,13 @@ export default function serviceTasks() {
 
     //============= GET TASKS =============//
     const getTasks = async (filter) => {
-        let response = await axios.get(url + 'task/filter/' + filter + '/00:00:5e:00:53:af');
+        let response = await axios.get(url + 'task/filter/' + filter + '/' + mac);
         tasks.value = response.data;
     }
 
     //============= LATE TASKS =============//
     const lateTasks = async () => {
-        let response = await axios.get(url + 'task/filter/late/00:00:5e:00:53:af');
+        let response = await axios.get(url + 'task/filter/late/' + mac);
         late.value = response.data.length;
     }
 

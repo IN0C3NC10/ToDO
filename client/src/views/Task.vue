@@ -76,6 +76,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import serviceTask from "../services/tasks.js";
 //============ Utils ============//
 import taskIcons from "../utils/taskIcons.js";
+import mac from '../utils/isConnected.js';
 //============ Features ============//
 import {
     reactive
@@ -183,7 +184,7 @@ export default {
 
         //============ Save Task ============//
         const saveTask = async () => {
-            form.macaddress = '00:00:5e:00:53:af';
+            form.macaddress = mac;
             form.when = form.date + ' ' + form.hour;
             await storeTask({
                 ...form
