@@ -23,8 +23,9 @@ export default {
 
 .footer {
     margin: 0;
+    margin-top: 50px;
     width: 100%;
-    height: 50px;
+    padding: 20px;
     background-color: var(--one);
     border-top: 7px solid var(--two);
     position: relative;

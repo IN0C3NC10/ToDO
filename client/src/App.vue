@@ -99,6 +99,7 @@ button:hover {
 }
 
 .body {
+    min-height: 450px;
     margin-top: 20px;
     margin-bottom: 20px;
 }

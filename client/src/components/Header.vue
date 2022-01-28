@@ -3,21 +3,21 @@
     <div class="navbar row">
         <img class="col-6 logo" src="../assets/logo-bigger.png" />
         <div class="col-6 menu">
-            <router-link :to="{name:'home'}">Início</router-link>
-            <span class="divider" />
-            <router-link :to="{name:'task.create'}">Nova Tarefa</router-link>
-            <span class="divider" />
             <template v-if="isConnected">
+                <router-link :to="{name:'home'}">Início</router-link>
+                <span class="divider" />
+                <router-link :to="{name:'task.create'}">Nova Tarefa</router-link>
+                <span class="divider" />
                 <button v-on:click.stop="destroyMac" class="menu-items" type="button">SAIR</button>
+                <span class="divider" />
+                <router-link :to="{name:'notify'}" id="bell">
+                    <img src="../assets/bell.png" />
+                    <span v-if="lateCount > 0">{{ lateCount }}</span>
+                </router-link>
             </template>
             <template v-else>
                 <router-link :to="{name:'qrcode'}">Sincronizar Celular</router-link>
             </template>
-            <span class="divider" />
-            <router-link :to="{name:'notify'}" id="bell">
-                <img src="../assets/bell.png" />
-                <span v-if="lateCount > 0">{{ lateCount }}</span>
-            </router-link>
         </div>
     </div>
 </div>
