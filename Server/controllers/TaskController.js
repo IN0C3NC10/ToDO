@@ -126,6 +126,7 @@ class TaskController {
         await task.findAll({
             where: {
                 macaddress: req.params.macaddress,
+                done:false,
                 when: { [Op.lt]:current }
             },
             order: [['when','ASC']]

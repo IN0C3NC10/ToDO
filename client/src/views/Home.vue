@@ -1,6 +1,5 @@
 <template>
 <div>
-    <!-- <Header :lateCount="this.late" v-on:functionLate="lateTasks" /> -->
     <router-view />
     <div class="body">
         <div class="container">
@@ -38,7 +37,6 @@
             </div>
         </div>
     </div>
-    <!-- <Footer /> -->
 </div>
 </template>
 
@@ -46,8 +44,6 @@
 //============ Bootstrap ============//
 import "bootstrap/dist/css/bootstrap.css";
 //============ Componentes ============//
-// import Header from "../components/Header.vue";
-// import Footer from "../components/Footer.vue";
 import FilterCard from "../components/FilterCard.vue";
 import TaskCard from "../components/TaskCard.vue";
 //============ Services ============//
@@ -58,8 +54,6 @@ export default {
 
     //============ Componentes ============//
     components: {
-        // Header,
-        // Footer,
         FilterCard,
         TaskCard
     },
@@ -70,11 +64,6 @@ export default {
             this.filter = params;
             this.allTasks(params);
         },
-
-        async lateTasks() {
-            this.filter = 'late';
-            this.allTasks(this.filter);
-        }
     },
 
     //============ Variáveis ============//
@@ -89,9 +78,7 @@ export default {
         // recupera os itens do service
         const {
             getTasks,
-            lateTasks,
             tasks,
-            late
         } = serviceTask();
 
         //.. é definido as funções para serem chamadas a qualquer momento
@@ -100,24 +87,16 @@ export default {
             await getTasks(params);
         };
 
-        //============ Late Tasks ============//
-        const pastTasks = async () => {
-            await lateTasks();
-        };
-
         //.. retorna os itens para serem usados pelo vue (funções e variaveis)
         return {
             tasks,
-            late,
             allTasks,
-            pastTasks
         };
     },
 
     //============ Created ============//
     created() {
         this.allTasks(this.filter);
-        this.pastTasks();
     },
 };
 </script>

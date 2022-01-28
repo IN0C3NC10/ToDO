@@ -34,10 +34,10 @@ const router = createRouter({
 })
 
 //.. verifica se possui um MacAddress salvo
-router.beforeEach((to,from,next)=>{
-  if (!isConnected && to.name != 'qrcode'){
+router.beforeEach((to, from, next) => {
+  if (!isConnected && to.name != 'qrcode') {
     next('/synchronize');
-  }else{
+  } else {
     next();
   }
 })

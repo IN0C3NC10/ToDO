@@ -1,6 +1,5 @@
 <template>
 <div>
-    <!-- <Header :lateCount="this.late" v-on:functionLate="lateTasks" /> -->
     <div class="body">
         <div class="container">
             <div class="row">
@@ -59,19 +58,14 @@
                     <button type="submit" class="btn bck-two">SALVAR</button>
                 </div>
             </form>
-{{ form }} {{ task }}
         </div>
     </div>
-    <!-- <Footer /> -->
 </div>
 </template>
 
 <script>
 //============ Bootstrap ============//
 import "bootstrap/dist/css/bootstrap.css";
-//============ Componentes ============//
-// import Header from "../components/Header.vue";
-// import Footer from "../components/Footer.vue";
 //============ Services ============//
 import serviceTask from "../services/tasks.js";
 //============ Utils ============//
@@ -81,7 +75,6 @@ import mac from '../utils/isConnected.js';
 import {
     reactive
 } from '@vue/reactivity';
-// import { onMounted } from '@vue/runtime-core';
 import {
     format
 } from 'date-fns';
@@ -95,12 +88,6 @@ export default {
             required: false,
             type: String,
         },
-    },
-
-    //============ Componentes ============//
-    components: {
-        // Header,
-        // Footer,
     },
 
     //============ Métodos ============//
@@ -152,7 +139,6 @@ export default {
         // recupera os itens do service
         const {
             task,
-            late,
             getTask,
             storeTask,
             destroyTask
@@ -203,7 +189,6 @@ export default {
             form,
             taskIcons,
             task,
-            late,
             setTask,
             saveTask,
             deleteTask

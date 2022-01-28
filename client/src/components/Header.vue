@@ -14,7 +14,7 @@
                 <router-link :to="{name:'qrcode'}">Sincronizar Celular</router-link>
             </template>
             <span class="divider" />
-            <button v-on:click.stop="this.verifyTasks()" id="bell">
+             <button id="bell">
                 <img src="../assets/bell.png" />
                 <span v-if="lateCount > 0">{{ lateCount }}</span>
             </button>
@@ -32,11 +32,6 @@ export default {
 
     //============ Métodos ============//
     methods: {
-        verifyTasks() {
-            //.. chamo o método enviado da Home
-            this.$emit("functionLate");
-        },
-
         //..função responsável por desconectar o usuário
         async destroyMac(){
             localStorage.removeItem('@todo/macaddress');
