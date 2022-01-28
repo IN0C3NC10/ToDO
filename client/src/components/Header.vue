@@ -7,9 +7,14 @@
             <span class="divider" />
             <router-link :to="{name:'task.create'}">Nova Tarefa</router-link>
             <span class="divider" />
-            <router-link :to="{name:'qrcode'}">Sincronizar Celular</router-link>
+            <template v-if="isConnected">
+                <button v-on:click.stop="destroyMac" class="menu-items" type="button">SAIR</button>
+            </template>
+            <template v-else>
+                <router-link :to="{name:'qrcode'}">Sincronizar Celular</router-link>
+            </template>
             <span class="divider" />
-            <button v-on:click.stop="this.verifyTasks()" class="menu-items" id="bell">
+            <button v-on:click.stop="this.verifyTasks()" id="bell">
                 <img src="../assets/bell.png" />
                 <span v-if="lateCount > 0">{{ lateCount }}</span>
             </button>
@@ -19,6 +24,8 @@
 </template>
 
 <script>
+import isConnected from '../utils/isConnected.js';
+
 export default {
     name: "Header",
     props: ['lateCount'],
@@ -28,7 +35,20 @@ export default {
         verifyTasks() {
             //.. chamo o método enviado da Home
             this.$emit("functionLate");
-        }
+        },
+
+        //..função responsável por desconectar o usuário
+        async destroyMac(){
+            localStorage.removeItem('@todo/macaddress');
+            window.location.reload();
+        },
+    },
+
+    //============ Setup ============//
+    setup() {
+        return {
+            isConnected
+        };
     },
 };
 </script>
@@ -45,6 +65,11 @@ export default {
 a {
     text-decoration: none;
     color: white;
+}
+
+button {
+    background: none;
+    border: none;
 }
 
 a:hover,
@@ -71,9 +96,10 @@ button:hover {
     text-transform: uppercase;
 }
 
-/* .menu-items {
-    margin: 0 10px;
-} */
+.menu-items {
+    color: var(--light);
+    font-weight: bold;
+}
 
 #bell {
     background: none;
