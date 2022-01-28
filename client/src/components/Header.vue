@@ -3,15 +3,15 @@
     <div class="navbar row">
         <img class="col-6 logo" src="../assets/logo-bigger.png" />
         <div class="col-6 menu">
-            <a class="menu-items" href="#">Inicio</a>
+            <router-link :to="{name:'home'}">Início</router-link>
             <span class="divider" />
             <router-link :to="{name:'task.create'}">Nova Tarefa</router-link>
             <span class="divider" />
-            <a class="menu-items" href="#">Sincronizar Celular</a>
+            <router-link :to="{name:'qrcode'}">Sincronizar Celular</router-link>
             <span class="divider" />
             <button v-on:click.stop="this.verifyTasks()" class="menu-items" id="bell">
                 <img src="../assets/bell.png" />
-                <span>{{ lateCount }}</span>
+                <span v-if="lateCount > 0">{{ lateCount }}</span>
             </button>
         </div>
     </div>
@@ -21,7 +21,7 @@
 <script>
 export default {
     name: "Header",
-    props:['lateCount'],
+    props: ['lateCount'],
 
     //============ Métodos ============//
     methods: {
@@ -47,7 +47,8 @@ a {
     color: white;
 }
 
-a:hover, button:hover {
+a:hover,
+button:hover {
     cursor: pointer;
     color: var(--two);
 }
@@ -70,9 +71,9 @@ a:hover, button:hover {
     text-transform: uppercase;
 }
 
-.menu-items {
+/* .menu-items {
     margin: 0 10px;
-}
+} */
 
 #bell {
     background: none;

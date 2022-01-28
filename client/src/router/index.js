@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Task from '../views/Task.vue';
+import QRCode from '../views/QRCode.vue';
 
 const routes = [
   {
@@ -18,7 +19,12 @@ const routes = [
     props: true,
     name: 'task.edit',
     component: Task
-  }
+  },
+  {
+    path: '/synchronize',
+    name: 'qrcode',
+    component: QRCode
+  },
 ]
 
 const router = createRouter({
