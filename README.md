@@ -86,7 +86,7 @@ $ npm install
 $ npm run serve
 
 
-#BeHappy!
+#Let'sCoding!
 ```
 <!-- Autor -->
 <h2 align="left" id="autor">Autor</h2>
